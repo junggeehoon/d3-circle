@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Circle</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <script>
+    const width = 1920;
+    const height = 1080;
+    const radius = 300;
+    const middleRadius = 150;
+    const smallRadius = 5;
+    const cx = 600;
+    const cy = 400;
+
+    let theta = 0;
+    const rotateCircle = () => {
+      if (theta >= 2 * Math.PI) {
+        theta = 0;
+      }
+      theta += 0.02;
+      const x = middleRadius * Math.cos(theta);
+      const y = middleRadius * Math.sin(theta);
+      setTimeout(() => rotateCircle(), Math.sin(theta) * 10);
+      return $('#smallCircle').css('-webkit-transform', `translate(${x}px, ${y - 150}px)`);
+    }
+
+    rotateCircle();
+
+    //Create SVG element
+    var svg = d3.select("body")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    // big circle
+    svg.append("circle")
+      .attr("id", "circle")
+      .attr("cx", cx)
+      .attr("cy", cy)
+      .attr("r", radius)
+      .attr("stroke-width", 3)
+      .attr("fill", '#fff')
+      .style("stroke", '#000')
+
+    svg.append("circle")
+      .attr("id", "smallCircle")
+      .attr("cx", cx)
+      .attr("cy", cy + 150)
+      .attr("r", 150)
+      .attr("stroke-width", 3)
+      .attr("fill", '#fff')
+      .style("stroke", '#000')
+  </script>
+</body>
+
+</html>
