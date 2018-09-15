@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Circle</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <script>
+    const svgWidth = 1920;
+    const svgHeight = 1080;
+    const radius = 300;
+    const smallRadius = 20;
+    const cx = 600;
+    const cy = 400;
+    let numberOfCircle = 12;
+
+    //Create SVG element
+    let svg = d3.select("body")
+      .append("svg")
+      .attr("width", svgWidth)
+      .attr("height", svgHeight);
+
+    // big circle
+    svg.append("circle")
+      .attr("id", "circle")
+      .attr("cx", cx)
+      .attr("cy", cy)
+      .attr("r", radius)
+      .attr("stroke-width", 3)
+      .attr("fill", '#fff')
+      .style("stroke", '#000')
+
+    const makeLine = (n, x, y, r) => {
+      let theta = 0;
+      for (let i = 0; i < n * 2; i++) {
+        theta += 2 * Math.PI / n / 2;
+        const x1 = r * Math.cos(theta);
+        const y1 = r * Math.sin(theta);
+
+        svg.append("line")
+          .attr("x1", x)
+          .attr("x2", x + x1)
+          .attr("y1", y)
+          .attr("y2", y + y1)
+          .attr("stroke-width", 2)
+          .attr("stroke", "black")
+      }
+    }
+
+    const makeCircle = (n, x, y, r) => {
+      let theta = 0;
+      for (let i = 0; i < n; i++) {
+        theta += 2 * Math.PI / n / 2;
+        const x1 = r * Math.cos(theta);
+        const y1 = r * Math.sin(theta);
+
+        svg.append("circle")
+          .attr("class", "circles")
+          .attr("cx", x + x1)
+          .attr("cy", y + y1)
+          .attr("r", smallRadius)
+          .attr("fill", '#FF834A')
+      }
+    }
+
+    makeLine(numberOfCircle, cx, cy, radius); // 만들 원의 개수, 중심의 x좌표, 중심의 y좌표, 원의 반지름
+    makeCircle(numberOfCircle, cx, cy, radius); // 만들 원의 개수, 중심의 x좌표, 중심의 y좌표, 원의 반지름
+
+    const returnPosition = (i, cos, sin, theta) => {
+      if (theta === 2 * Math.PI) {
+        theta = 0;
+      }
+      theta += Math.PI / 400;
+
+      const dx = -radius * (1 - Math.cos(theta)) * cos;
+      const dy = -radius * (1 - Math.cos(theta)) * sin;
+
+      setTimeout(() => returnPosition(i, cos, sin, theta), 10);
+      return $(`.circles:eq(${i})`).css('-webkit-transform', `translate(${dx}px, ${dy}px)`);
+    }
+
+    for (let i = 0; i < numberOfCircle; i++) {
+      const x = $(`.circles:eq(${i})`).attr("cx") - cx;
+      const y = $(`.circles:eq(${i})`).attr("cy") - cy;
+      const hypotenuse = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+      const cos = x / hypotenuse;
+      const sin = y / hypotenuse;
+      setTimeout(() => returnPosition(i, cos, sin, 0), 4400 / numberOfCircle * i);
+    }
+  </script>
+</body>
+
+</html>
