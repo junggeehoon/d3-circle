@@ -11,14 +11,15 @@
 </head>
 
 <body>
+  <button class="toggle">Toggle Line</button>
   <script>
     const svgWidth = 1920;
     const svgHeight = 1080;
     const radius = 300;
-    const smallRadius = 20;
+    const smallRadius = 15;
     const cx = 600;
     const cy = 400;
-    let numberOfCircle = 12;
+    let numberOfCircle = 8;
 
     //Create SVG element
     let svg = d3.select("body")
@@ -32,9 +33,9 @@
       .attr("cx", cx)
       .attr("cy", cy)
       .attr("r", radius)
-      .attr("stroke-width", 3)
+      .attr("stroke-width", 4)
       .attr("fill", '#fff')
-      .style("stroke", '#000')
+      .style("stroke", '#007c91')
 
     const makeLine = (n, x, y, r) => {
       let theta = 0;
@@ -44,12 +45,13 @@
         const y1 = r * Math.sin(theta);
 
         svg.append("line")
+          .attr("class", "line")
           .attr("x1", x)
           .attr("x2", x + x1)
           .attr("y1", y)
           .attr("y2", y + y1)
           .attr("stroke-width", 2)
-          .attr("stroke", "black")
+          .attr("stroke", "#007c91")
       }
     }
 
@@ -65,7 +67,7 @@
           .attr("cx", x + x1)
           .attr("cy", y + y1)
           .attr("r", smallRadius)
-          .attr("fill", '#FF834A')
+          .attr("fill", '#00acc1')
       }
     }
 
@@ -93,6 +95,11 @@
       const sin = y / hypotenuse;
       setTimeout(() => returnPosition(i, cos, sin, 0), 4400 / numberOfCircle * i);
     }
+
+    $(".toggle").click(function () {
+      $(".line").toggle();
+    });
+
   </script>
 </body>
 
