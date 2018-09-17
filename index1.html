@@ -34,7 +34,7 @@
 
     rotateCircle();
 
-    //Create SVG element
+    // Create SVG element
     var svg = d3.select("body")
       .append("svg")
       .attr("width", width)
@@ -46,9 +46,9 @@
       .attr("cx", cx)
       .attr("cy", cy)
       .attr("r", radius)
-      .attr("stroke-width", 3)
+      .attr("stroke-width", 4)
       .attr("fill", '#fff')
-      .style("stroke", '#000')
+      .style("stroke", '#140078')
 
     svg.append("circle")
       .attr("id", "smallCircle")
@@ -56,8 +56,8 @@
       .attr("cy", cy + 150)
       .attr("r", 150)
       .attr("stroke-width", 3)
-      .attr("fill", '#fff')
-      .style("stroke", '#000')
+      .attr("fill", '#512da8')
+      .style("stroke", '#512da8')
   </script>
 </body>
 
