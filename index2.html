@@ -38,7 +38,7 @@
       // Create Sin Curve
       svg.append("circle")
         .attr("class", "sin")
-        .attr("cx", theta * 60)
+        .attr("cx", radius + theta * 60)
         .attr("cy", 400 - 300 * Math.sin(theta))
         .attr("r", radius)
         .attr("fill", '#e91e63')
@@ -47,7 +47,7 @@
       // Create Cos Curve
       svg.append("circle")
         .attr("class", "cos")
-        .attr("cx", theta * 60)
+        .attr("cx", radius + theta * 60)
         .attr("cy", 400 - 300 * Math.cos(theta))
         .attr("r", radius)
         .attr("fill", '#1976d2')
