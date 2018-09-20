@@ -12,8 +12,8 @@
 
 <body>
   <script>
-    const width = 1920;
-    const height = 1080;
+    const width = 1080;
+    const height = 720;
     const radius = 300;
     const middleRadius = 150;
     const smallRadius = 5;
@@ -35,7 +35,7 @@
     rotateCircle();
 
     // Create SVG element
-    var svg = d3.select("body")
+    const svg = d3.select("body")
       .append("svg")
       .attr("width", width)
       .attr("height", height);

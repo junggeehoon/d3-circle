@@ -14,130 +14,37 @@
   <script>
     const svgWidth = 1920;
     const svgHeight = 1080;
-    const radius = 300;
-    const middleRadius = 150;
-    const smallRadius = 5;
-    const cx = 600;
-    const cy = 400;
-    let numberOfCircle = 8;
+    const radius = 10;
+    let count = 0;
 
-    //Create SVG element
-    let svg = d3.select("body")
+    // Create SVG element
+    const svg = d3.select("body")
       .append("svg")
       .attr("width", svgWidth)
       .attr("height", svgHeight);
 
-    // big circle
-    svg.append("circle")
-      .attr("id", "circle")
-      .attr("cx", cx)
-      .attr("cy", cy)
-      .attr("r", radius)
-      .attr("stroke-width", 3)
-      .attr("fill", '#fff')
-      .style("stroke", '#000')
+    let theta = 0;
+    const makeCircle = () => {
 
-    svg.append("line")
-      .attr("x1", 300)
-      .attr("x2", 900)
-      .attr("y1", 400)
-      .attr("y2", 400)
-      .attr("stroke-width", 3)
-      .attr("stroke", "black")
+      if (count === 120) {
+        window.clearInterval(interval);
+        return;
+      };
 
-    svg.append("line")
-      .attr("x1", 600)
-      .attr("x2", 600)
-      .attr("y1", 100)
-      .attr("y2", 700)
-      .attr("stroke-width", 3)
-      .attr("stroke", "black")
+      count++;
+      theta += Math.PI / 15;
 
-    svg.append("circle")
-      .attr("id", "smallCircle")
-      .attr("cx", cx)
-      .attr("cy", cy + 150)
-      .attr("r", 150)
-      .attr("stroke-width", 3)
-      .attr("fill", '#fff')
-      .style("stroke", '#000')
+      svg.append("circle")
+        .attr("class", "circles")
+        .attr("cx", theta * 60)
+        .attr("cy", 400 + 300 * Math.sin(theta))
+        .attr("r", radius)
+        .attr("fill", '#e91e63')
 
-    const makeCircle = (n, x, y, r) => {
-      let theta = 0;
-      for (let i = 0; i < n; i++) {
-        theta += 2 * Math.PI / n;
-        const x1 = r * Math.cos(theta);
-        const y1 = r * Math.sin(theta);
-
-        svg.append("circle")
-          .attr("class", "circles")
-          .attr("cx", x + x1)
-          .attr("cy", y + y1)
-          .attr("r", smallRadius)
-          .attr("fill", '#ff0000')
-      }
     }
 
-    makeCircle(numberOfCircle, cx, cy + 150, 150); // 만들 원의 개수, 중심의 x좌표, 중심의 y좌표, 원의 반지름
+    const interval = setInterval(() => makeCircle(), 50);
 
-    // const moveCircle = (i, x, y) => {
-
-    //   const hypotenuse = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-    //   const cos = x / hypotenuse;
-    //   const sin = y / hypotenuse;
-
-    //   if (d === 1) {
-    //     if (hypotenuse >= radius) { return moveCircle(i, x, y, -1); }
-    //     if (x >= 0) {
-    //       if (y >= 0) {
-    //         // 1사분면
-    //         setTimeout(() => moveCircle(i, radius / 10 * cos, radius / 10 * sin, 1), 100);
-    //       } else {
-    //         // 4사분면
-    //         setTimeout(() => moveCircle(i, radius / 10 * cos, -radius / 10 * sin, 1), 100);
-    //       }
-    //     } else {
-    //       if (y <= 0) {
-    //         // 3사분면
-    //         setTimeout(() => moveCircle(i, -radius / 10 * cos, -radius / 10 * sin, 1), 100);
-    //       } else {
-    //         // 2사분면
-    //         setTimeout(() => moveCircle(i, radius / 10 * cos, radius / 10 * sin, 1), 100);
-    //       }
-    //     }
-    //   } else if (d === -1) {
-    //     if (hypotenuse >= radius) { return moveCircle(i, x, y, 1); }
-    //     if (x >= 0) {
-    //       if (y >= 0) {
-    //         // 1사분면
-    //         setTimeout(() => moveCircle(i, radius / 10 * cos, radius / 10 * sin, 1), 100);
-    //       } else {
-    //         // 4사분면
-    //         setTimeout(() => moveCircle(i, radius / 10 * cos, radius / 10 * sin, 1), 100);
-    //       }
-    //     } else {
-    //       if (y <= 0) {
-    //         // 3사분면
-    //         setTimeout(() => moveCircle(i, radius / 10 * cos, radius / 10 * sin, 1), 100);
-    //       } else {
-    //         // 2사분면
-    //         setTimeout(() => moveCircle(i, radius / 10 * cos, radius / 10 * sin, 1), 100);
-    //       }
-    //     }
-    //   }
-
-    //   return $(`.circles:eq(${i})`).css('-webkit-transform', `translate(${x}px, ${y}px)`);
-
-    // }
-
-    // moveCircle(2, $(`.circles:eq(${2})`).attr("cx") - cx, $(`.circles:eq(${2})`).attr("cy") - cy, 1);
-
-
-    // for (let i = 0; i < numberOfCircle; i++) {
-    //   const x = $(`.circles:eq(${i})`).attr("cx") - cx;
-    //   const y = $(`.circles:eq(${i})`).attr("cy") - cy;
-    //   moveCircle(i, x, y);
-    // }
   </script>
 </body>
 
