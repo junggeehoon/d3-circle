@@ -27,21 +27,19 @@
     let theta = 0;
     const drawCircle = () => {
 
-
       if (theta >= 12.2 * Math.PI) {
         window.clearInterval(interval);
         return;
       };
 
-      const xt = 0.3 * Math.exp(0.2 * theta) * Math.cos(theta)
-      const yt = 0.3 * Math.exp(0.2 * theta) * Math.sin(theta)
-      const r = radius + Math.pow(1.09, count - 70)
-      // Create Sin Curve
+      const xt = 0.3 * Math.exp(0.2 * theta) * Math.cos(theta);
+      const yt = 0.3 * Math.exp(0.2 * theta) * Math.sin(theta);
+
       svg.append("circle")
         .attr("class", "sin")
         .attr("cx", 700 + xt)
         .attr("cy", 400 - yt)
-        .attr("r", r)
+        .attr("r", radius + Math.pow(1.09, count - 70))
         .attr("fill", '#e91e63')
       theta += Math.PI / 10;
       count++;
