@@ -11,6 +11,10 @@
 </head>
 
 <body>
+
+  <button class="sinBtn">Toggle sin</button>
+  <button class="cosBtn">Toggle cos</button>
+
   <script>
     const svgWidth = 1920;
     const svgHeight = 1080;
@@ -31,20 +35,36 @@
         return;
       };
 
-      count++;
-      theta += Math.PI / 15;
-
+      // Create Sin Curve
       svg.append("circle")
-        .attr("class", "circles")
+        .attr("class", "sin")
         .attr("cx", theta * 60)
-        .attr("cy", 400 + 300 * Math.sin(theta))
+        .attr("cy", 400 - 300 * Math.sin(theta))
         .attr("r", radius)
         .attr("fill", '#e91e63')
 
+
+      // Create Cos Curve
+      svg.append("circle")
+        .attr("class", "cos")
+        .attr("cx", theta * 60)
+        .attr("cy", 400 - 300 * Math.cos(theta))
+        .attr("r", radius)
+        .attr("fill", '#1976d2')
+
+      count++;
+      theta += Math.PI / 15;
     }
 
     const interval = setInterval(() => makeCircle(), 50);
 
+    $(".sinBtn").click(function () {
+      $(".sin").toggle();
+    });
+
+    $(".cosBtn").click(function () {
+      $(".cos").toggle();
+    });
   </script>
 </body>
 
