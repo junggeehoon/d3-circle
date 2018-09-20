@@ -12,13 +12,11 @@
 
 <body>
 
-  <button class="sinBtn">Toggle sin</button>
-  <button class="cosBtn">Toggle cos</button>
-
   <script>
     const svgWidth = 1920;
     const svgHeight = 1080;
-    const radius = 10;
+    const radius = 1;
+    let count = 1;
 
     // Create SVG element
     const svg = d3.select("body")
@@ -29,39 +27,28 @@
     let theta = 0;
     const drawCircle = () => {
 
-      if (theta >= 7 * Math.PI) {
+
+      if (theta >= 12.2 * Math.PI) {
         window.clearInterval(interval);
         return;
       };
 
+      const xt = 0.3 * Math.exp(0.2 * theta) * Math.cos(theta)
+      const yt = 0.3 * Math.exp(0.2 * theta) * Math.sin(theta)
+      const r = radius + Math.pow(1.09, count - 70)
       // Create Sin Curve
       svg.append("circle")
         .attr("class", "sin")
-        .attr("cx", radius + theta * 60)
-        .attr("cy", 400 - 300 * Math.sin(theta))
-        .attr("r", radius)
+        .attr("cx", 700 + xt)
+        .attr("cy", 400 - yt)
+        .attr("r", r)
         .attr("fill", '#e91e63')
-
-      // Create Cos Curve
-      svg.append("circle")
-        .attr("class", "cos")
-        .attr("cx", radius + theta * 60)
-        .attr("cy", 400 - 300 * Math.cos(theta))
-        .attr("r", radius)
-        .attr("fill", '#1976d2')
-
-      theta += Math.PI / 20;
+        console.log(r)
+      theta += Math.PI / 10;
+      count++;
     }
 
-    const interval = setInterval(() => drawCircle(), 50);
-
-    $(".sinBtn").click(function () {
-      $(".sin").toggle();
-    });
-
-    $(".cosBtn").click(function () {
-      $(".cos").toggle();
-    });
+    const interval = setInterval(() => drawCircle(), 30 / Math.sqrt(count));
   </script>
 </body>
 
