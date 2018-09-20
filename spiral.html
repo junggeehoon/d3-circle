@@ -15,7 +15,7 @@
   <script>
     const svgWidth = 1920;
     const svgHeight = 1080;
-    const radius = 1;
+    const radius = 0.05;
     let count = 1;
 
     // Create SVG element
@@ -27,20 +27,21 @@
     let theta = 0;
     const drawCircle = () => {
 
-      if (theta >= 12.2 * Math.PI) {
+      if (theta >= 14.21 * Math.PI) {
         window.clearInterval(interval);
         return;
       };
 
-      const xt = 0.3 * Math.exp(0.2 * theta) * Math.cos(theta);
-      const yt = 0.3 * Math.exp(0.2 * theta) * Math.sin(theta);
+      const xt = 0.3 * Math.exp(0.17 * theta) * Math.cos(theta);
+      const yt = 0.3 * Math.exp(0.17 * theta) * Math.sin(theta);
+      const color = count % 3 === 0 ? '#e91e63' : '#ffe082';
 
       svg.append("circle")
         .attr("class", "sin")
         .attr("cx", 700 + xt)
         .attr("cy", 400 - yt)
-        .attr("r", radius + Math.pow(1.09, count - 70))
-        .attr("fill", '#e91e63')
+        .attr("r", radius + Math.pow(1.064, count - 70))
+        .attr("fill", color)
       theta += Math.PI / 10;
       count++;
     }
