@@ -35,7 +35,7 @@
       const xt = 0.3 * Math.exp(0.1759 * theta) * Math.cos(theta);
       const yt = 0.3 * Math.exp(0.1759 * theta) * Math.sin(theta);
       const color = count % 3 === 0 ? '#e91e63' : '#ffe082';
-      const r = radius + Math.pow(1.064, count - 70);
+      const r = radius + Math.pow(1.068, count - 70);
 
       svg.append("circle")
         .attr("class", "sin")
@@ -43,6 +43,7 @@
         .attr("cy", 400 - yt)
         .attr("r", r)
         .attr("fill", color)
+        
       theta += Math.PI / 10;
       count++;
     }
