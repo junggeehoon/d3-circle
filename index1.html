@@ -12,13 +12,12 @@
 
 <body>
   <script>
-    const width = 1080;
-    const height = 720;
-    const radius = 300;
-    const middleRadius = 150;
-    const smallRadius = 5;
-    const cx = 600;
-    const cy = 400;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const radius = (width > height ? height : width) / 2.7;
+    const smallRadius = radius / 2;
+    const cx = width / 2;
+    const cy = height / 2;
 
     let theta = 0;
     const rotateCircle = () => {
@@ -26,10 +25,10 @@
         theta = 0;
       }
       theta += 0.02;
-      const x = middleRadius * Math.cos(theta);
-      const y = middleRadius * Math.sin(theta);
+      const x = smallRadius * Math.cos(theta);
+      const y = smallRadius * Math.sin(theta);
       setTimeout(() => rotateCircle(), Math.sin(theta) * 10);
-      return $('#smallCircle').css('-webkit-transform', `translate(${x}px, ${y - 150}px)`);
+      return $('#smallCircle').css('-webkit-transform', `translate(${x}px, ${y - smallRadius}px)`);
     }
 
     rotateCircle();
@@ -37,8 +36,8 @@
     // Create SVG element
     const svg = d3.select("body")
       .append("svg")
-      .attr("width", width)
-      .attr("height", height);
+      .attr("width", 1920)
+      .attr("height", 1080);
 
     // big circle
     svg.append("circle")
@@ -50,11 +49,12 @@
       .attr("fill", '#fff')
       .style("stroke", '#140078')
 
+    // small circle
     svg.append("circle")
       .attr("id", "smallCircle")
       .attr("cx", cx)
-      .attr("cy", cy + 150)
-      .attr("r", 150)
+      .attr("cy", cy + smallRadius)
+      .attr("r", smallRadius)
       .attr("stroke-width", 3)
       .attr("fill", '#512da8')
       .style("stroke", '#512da8')

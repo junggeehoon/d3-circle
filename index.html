@@ -13,8 +13,6 @@
 <body>
   <button class="toggle">Toggle Line</button>
   <script>
-    const width = window.innerWidth;
-    const height = window.innerHeight;
     const radius = 300;
     const smallRadius = 15;
     const cx = 600;
@@ -24,8 +22,8 @@
     // Create SVG element
     let svg = d3.select("body")
       .append("svg")
-      .attr("width", width)
-      .attr("height", height);
+      .attr("width", 1920)
+      .attr("height", 1080);
 
     // big circle
     svg.append("circle")

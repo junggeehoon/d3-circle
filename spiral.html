@@ -13,21 +13,21 @@
 <body>
 
   <script>
-    const svgWidth = 1920;
-    const svgHeight = 1080;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     const radius = 0.05;
     let count = 1;
 
     // Create SVG element
     const svg = d3.select("body")
       .append("svg")
-      .attr("width", svgWidth)
-      .attr("height", svgHeight);
+      .attr("width", 1920)
+      .attr("height", 1080);
 
     let theta = 0;
     const drawCircle = () => {
 
-      if (theta >= 14.21 * Math.PI) {
+      if (theta >= 14.2 * Math.PI) {
         window.clearInterval(interval);
         return;
       };
@@ -39,8 +39,8 @@
 
       svg.append("circle")
         .attr("class", "sin")
-        .attr("cx", 700 + xt)
-        .attr("cy", 400 - yt)
+        .attr("cx", width / 2.5 + xt)
+        .attr("cy", height / 2.5 - yt)
         .attr("r", r)
         .attr("fill", color)
         
