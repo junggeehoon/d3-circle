@@ -73,7 +73,7 @@
     makeCircle(numberOfCircle, cx, cy, radius); // 만들 원의 개수, 중심의 x좌표, 중심의 y좌표, 원의 반지름
 
     const moveCircle = (i, cos, sin, theta) => {
-      if (theta === 2 * Math.PI) {
+      if (theta >= 2 * Math.PI) {
         theta = 0;
       }
       theta += Math.PI / 300;
