@@ -35,19 +35,17 @@
       .attr("fill", '#fff')
       .style("stroke", '#007c91')
 
-    const makeLine = (n, x, y, r) => {
+    const makeLine = (n, centerX, centerY, r) => {
       let theta = 0;
       for (let i = 0; i < n * 2; i++) {
         theta += Math.PI / n;
-        const x1 = r * Math.cos(theta);
-        const y1 = r * Math.sin(theta);
-
+        
         svg.append("line")
           .attr("class", "line")
-          .attr("x1", x)
-          .attr("x2", x + x1)
-          .attr("y1", y)
-          .attr("y2", y + y1)
+          .attr("x1", centerX)
+          .attr("x2", centerX + r * Math.cos(theta))
+          .attr("y1", centerY)
+          .attr("y2", centerY + r * Math.sin(theta))
           .attr("stroke-width", 2)
           .attr("stroke", "#007c91")
       }
