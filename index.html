@@ -39,7 +39,7 @@
       let theta = 0;
       for (let i = 0; i < n * 2; i++) {
         theta += Math.PI / n;
-        
+
         svg.append("line")
           .attr("class", "line")
           .attr("x1", centerX)
@@ -65,8 +65,8 @@
       }
     }
 
-    makeLine(numberOfCircle, centerX, centerY, radius); // 만들 선의 개수, 중심의 x좌표, 중심의 y좌표, 원의 반지름
-    makeCircle(numberOfCircle, centerX, centerY, radius); // 만들 원의 개수, 중심의 x좌표, 중심의 y좌표, 원의 반지름
+    makeLine(numberOfCircle, centerX, centerY, radius);
+    makeCircle(numberOfCircle, centerX, centerY, radius);
 
     const moveCircle = (i, cos, sin, theta) => {
       if (theta >= 2 * Math.PI) {
