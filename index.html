@@ -38,7 +38,7 @@
     const makeLine = (n, x, y, r) => {
       let theta = 0;
       for (let i = 0; i < n * 2; i++) {
-        theta += 2 * Math.PI / n / 2;
+        theta += Math.PI / n;
         const x1 = r * Math.cos(theta);
         const y1 = r * Math.sin(theta);
 
