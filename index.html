@@ -30,64 +30,73 @@
       .attr("id", "circle")
       .attr("cx", centerX)
       .attr("cy", centerY)
-      .attr("r", radius)
+      .attr("r", radius + smallRadius)
       .attr("stroke-width", 4)
       .attr("fill", '#fff')
       .style("stroke", '#007c91')
 
-    const makeLine = (n, centerX, centerY, r) => {
+    const makeLine = () => {
       let theta = 0;
-      for (let i = 0; i < n * 2; i++) {
-        theta += Math.PI / n;
+      for (let i = 0; i < numberOfCircle * 2; i++) {
+        theta += Math.PI / numberOfCircle;
 
         svg.append("line")
           .attr("class", "line")
           .attr("x1", centerX)
-          .attr("x2", centerX + r * Math.cos(theta))
+          .attr("x2", centerX + (radius + smallRadius) * Math.cos(theta))
           .attr("y1", centerY)
-          .attr("y2", centerY + r * Math.sin(theta))
+          .attr("y2", centerY + (radius + smallRadius) * Math.sin(theta))
           .attr("stroke-width", 2)
           .attr("stroke", "#007c91")
       }
     }
 
-    const makeCircle = (n, centerX, centerY, r) => {
+    const makeCircle = () => {
       let theta = 0;
-      for (let i = 0; i < n; i++) {
-        theta += Math.PI / n;
-
+      for (let i = 0; i < numberOfCircle; i++) {
+        theta += 2 * Math.PI / numberOfCircle;
         svg.append("circle")
           .attr("class", "circles")
-          .attr("cx", centerX + (r - smallRadius) * Math.cos(theta))
-          .attr("cy", centerY + (r - smallRadius) * Math.sin(theta))
+          .attr("cx", centerX - radius / 2 + (radius / 2) * Math.cos(theta))
+          .attr("cy", centerY + (radius / 2) * Math.sin(theta))
           .attr("r", smallRadius)
           .attr("fill", '#00acc1')
       }
     }
 
-    makeLine(numberOfCircle, centerX, centerY, radius);
-    makeCircle(numberOfCircle, centerX, centerY, radius);
+    makeLine();
+    makeCircle();
 
-    const moveCircle = (i, cos, sin, theta) => {
+    const moveCircle = (i, cos, sin, alpha, theta, xCoordinate, yCoordinate) => {
       if (theta >= 2 * Math.PI) {
         theta = 0;
       }
       theta += Math.PI / 300;
+      const yDiffer = (1 + Math.cos(alpha / 2));
+      const tDiffer = Math.acos( -Math.cos(alpha / 2) );
+      const yValue = Math.cos(theta + tDiffer) - 1 + yDiffer;
+      let xCorrection = Math.abs(cos);
+      let yCorrection = Math.abs(sin);
+      if (xCoordinate < 0 && yCoordinate > 0) {
+        xCorrection *= -1; // 제 4사분면
+      }
+      let dx = radius * xCorrection * yValue;
+      let dy = radius * yCorrection * yValue;
 
-      const dx = (radius - smallRadius) * cos * (Math.cos(theta) - 1);
-      const dy = (radius - smallRadius) * sin * (Math.cos(theta) - 1);
-
-      setTimeout(() => moveCircle(i, cos, sin, theta), 10);
+      setTimeout(() => moveCircle(i, cos, sin, alpha, theta, xCoordinate, yCoordinate), 10);
       return $(`.circles:eq(${i})`).css('-webkit-transform', `translate(${dx}px, ${dy}px)`);
     }
 
     for (let i = 0; i < numberOfCircle; i++) {
-      const x = $(`.circles:eq(${i})`).attr("cx") - centerX;
-      const y = $(`.circles:eq(${i})`).attr("cy") - centerY;
-      const hypotenuse = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-      const cos = x / hypotenuse;
-      const sin = y / hypotenuse;
-      setTimeout(() => moveCircle(i, cos, sin, 0), 3300 / numberOfCircle * i);
+      const xCoordinate = $(`.circles:eq(${i})`).attr("cx") - centerX;
+      const yCoordinate = $(`.circles:eq(${i})`).attr("cy") - centerY;
+      const hypotenuse = Math.sqrt(Math.pow(xCoordinate, 2) + Math.pow(yCoordinate, 2));
+      const cos = xCoordinate / hypotenuse;
+      const sin = yCoordinate / hypotenuse;
+      let alpha  = Math.PI * (1 + 2 * (i + 1) / numberOfCircle);
+      if (alpha > 6.28) alpha -= 2 * Math.PI;
+      const theta = Math.acos( -Math.cos(alpha / 2) );
+      moveCircle(i, cos, sin, alpha, 0, xCoordinate, yCoordinate);
     }
 
     $(".toggle").click(function () {

@@ -27,7 +27,7 @@
       theta += 0.02;
       const x = smallRadius * Math.cos(theta);
       const y = smallRadius * Math.sin(theta);
-      setTimeout(() => rotateCircle(), Math.sin(theta) * 10);
+      setTimeout(() => rotateCircle(), 10);
       return $('#smallCircle').css('-webkit-transform', `translate(${x}px, ${y - smallRadius}px)`);
     }
 
