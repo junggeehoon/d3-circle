@@ -13,11 +13,23 @@
 <body>
   <button class="toggle">Toggle Line</button>
   <script>
-    const radius = 300;
-    const smallRadius = 15;
-    const centerX = 600;
-    const centerY = 400;
-    const numberOfCircle = 8;
+    const settings = {
+      radius: 300,
+      smallRadius: 15,
+      centerX: 600,
+      centerY: 400,
+      numberOfCircle: 8,
+      period: 200
+    }
+
+    const {
+      radius,
+      smallRadius,
+      centerX,
+      centerY,
+      numberOfCircle,
+      period
+    } = settings;
 
     // Create SVG element
     let svg = d3.select("body")
@@ -36,8 +48,8 @@
       .style("stroke", '#007c91')
 
     const makeLine = () => {
-      let theta = 0;
-      for (let i = 0; i < numberOfCircle * 2; i++) {
+      let theta = numberOfCircle % 2 === 0 ? 0 : Math.PI / 2 * numberOfCircle;
+      for (let i = 0; i < 2 * numberOfCircle; i++) {
         theta += Math.PI / numberOfCircle;
 
         svg.append("line")
@@ -71,9 +83,9 @@
       if (theta >= 2 * Math.PI) {
         theta = 0;
       }
-      theta += Math.PI / 300;
+      theta += Math.PI / period;
       const yDiffer = (1 + Math.cos(alpha / 2));
-      const tDiffer = Math.acos( -Math.cos(alpha / 2) );
+      const tDiffer = Math.acos(-Math.cos(alpha / 2));
       const yValue = Math.cos(theta + tDiffer) - 1 + yDiffer;
       let xCorrection = Math.abs(cos);
       let yCorrection = Math.abs(sin);
@@ -83,7 +95,9 @@
       let dx = radius * xCorrection * yValue;
       let dy = radius * yCorrection * yValue;
 
-      setTimeout(() => moveCircle(i, cos, sin, alpha, theta, xCoordinate, yCoordinate), 10);
+      requestAnimationFrame(() => {
+        moveCircle(i, cos, sin, alpha, theta, xCoordinate, yCoordinate);
+      });
       return $(`.circles:eq(${i})`).css('-webkit-transform', `translate(${dx}px, ${dy}px)`);
     }
 
@@ -93,9 +107,9 @@
       const hypotenuse = Math.sqrt(Math.pow(xCoordinate, 2) + Math.pow(yCoordinate, 2));
       const cos = xCoordinate / hypotenuse;
       const sin = yCoordinate / hypotenuse;
-      let alpha  = Math.PI * (1 + 2 * (i + 1) / numberOfCircle);
+      let alpha = Math.PI * (1 + 2 * (i + 1) / numberOfCircle);
       if (alpha > 6.28) alpha -= 2 * Math.PI;
-      const theta = Math.acos( -Math.cos(alpha / 2) );
+      const theta = Math.acos(-Math.cos(alpha / 2));
       moveCircle(i, cos, sin, alpha, 0, xCoordinate, yCoordinate);
     }
 
