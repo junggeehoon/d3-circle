@@ -18,7 +18,7 @@
       smallRadius: 15,
       centerX: 600,
       centerY: 400,
-      numberOfCircle: 8,
+      numberOfCircle: 6,
       period: 150
     }
 
@@ -87,9 +87,11 @@
       const yDiffer = (1 + Math.cos(alpha / 2));
       const tDiffer = Math.acos(-Math.cos(alpha / 2));
       const yValue = Math.cos(theta + tDiffer) - 1 + yDiffer;
+
       let xCorrection = Math.abs(cos);
       let yCorrection = Math.abs(sin);
-      if (xCoordinate < 0 && yCoordinate > 0) {
+
+      if (xCoordinate < 0 && yCoordinate.toFixed(2) > 0) {
         xCorrection *= -1; // 제 4사분면
       }
       let dx = radius * xCorrection * yValue;
