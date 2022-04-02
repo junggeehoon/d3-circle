@@ -9,33 +9,54 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
+<style>
+  #circle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+  }
+</style>
 
 <body>
   <button class="toggle">Toggle Line</button>
+  <!-- <input type="number" class="circleNumber" value="8">
+  <input type="number" class="circleSpeed" value="120"> -->
   <script>
+    // const numberOfCircle = document.getElementsByClassName("circleNumber").value;
+    // const period = document.getElementsByClassName("circleSpeed").value;
+    // console.log(numberOfCircle)
+
     const settings = {
-      radius: 300,
+      bigCircleColor: '#007c91',
+      smallCircleColor: '#007c91',
+      lineColor: '#007c91',
+      radius: Math.min(window.innerWidth / 3, window.innerHeight / 3),
       smallRadius: 15,
-      centerX: 600,
-      centerY: 400,
-      numberOfCircle: 6,
-      period: 150
+      centerX: window.innerWidth / 2,
+      centerY: window.innerHeight / 2,
+      numberOfCircle: 8,
+      period: 120
     }
 
     const {
+      bigCircleColor,
+      smallCircleColor,
+      lineColor,
       radius,
       smallRadius,
       centerX,
       centerY,
       numberOfCircle,
-      period
+      period,
     } = settings;
 
     // Create SVG element
     let svg = d3.select("body")
       .append("svg")
       .attr("width", 1920)
-      .attr("height", 1080);
+      .attr("height", 1080)
 
     // big circle
     svg.append("circle")
@@ -45,7 +66,7 @@
       .attr("r", radius + smallRadius)
       .attr("stroke-width", 4)
       .attr("fill", '#fff')
-      .style("stroke", '#007c91')
+      .style("stroke", `${bigCircleColor}`)
 
     const makeLine = () => {
       let theta = numberOfCircle % 2 === 0 ? 0 : Math.PI / 2 * numberOfCircle;
@@ -59,7 +80,7 @@
           .attr("y1", centerY)
           .attr("y2", centerY + (radius + smallRadius) * Math.sin(theta))
           .attr("stroke-width", 2)
-          .attr("stroke", "#007c91")
+          .attr("stroke", `${lineColor}`)
       }
     }
 
@@ -72,7 +93,7 @@
           .attr("cx", centerX - radius / 2 + (radius / 2) * Math.cos(theta))
           .attr("cy", centerY + (radius / 2) * Math.sin(theta))
           .attr("r", smallRadius)
-          .attr("fill", '#00acc1')
+          .attr("fill", `${smallCircleColor}`)
       }
     }
 
